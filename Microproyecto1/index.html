@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>CSS Template</title>
+<title>Memory Game</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles.css">
@@ -12,20 +12,47 @@
   <a href="#">Home</a>
   <a href="#">Game</a>
   <a href="#">Scores</a>
+  <p>Welcome to Memorize!</p>
 </div>
 
-<div class="header">
-  <h1>Memory Game!</h1>
+<div class="header" id="header">
+  
+  <form id="form"> Please enter your username:
+    
+    <input id="user" name="username" placeholder="Username..."/>  
+    <button class="button" id="start2">Start playing</button>
+    
+  
+  </form>
+  
 </div>
+
+
 
 <div class="content">
-  <button class="button button1">Start playing</button>
-  <p>A topnav, content and a footer.</p>
+  <div class="wrapper"> 
+  <div class="stats-container">
+      <div id="moves-count"></div>
+      <div id="score"></div>
+      <div id="time"></div>
+    </div>
+    <div class="game-container"></div>
+  </div>
+</div>
+
+<button id="stop" class="hide">Stop Game</button>
+<div class="controls-container hide">
+  <p id="result"></p>
+</div>
+
+<!-- Script -->
+<script src="script.js"></script>
 </div>
 
 
 <div class="footer">
-  <p>Footer</p>
+  <button id="change" class="button" style="width:25%"> Change username </button>
+  <button id="restart" class="button button2"> Restart </button>
 </div>
 
 </body>
