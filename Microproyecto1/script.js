@@ -1,12 +1,16 @@
-
+//Data
 const score = document.getElementById("score");
 const timeValue = document.getElementById("time");
 const username = document.getElementById("user");
+
+//Buttons
 const startButton2 = document.getElementById("start2");
 const changeButton =  document.getElementById("change");
 const restartButton = document.getElementById("restart");
-const gameContainer = document.querySelector(".game-container");
+const showButton = document.getElementById("show");
 
+//Displayed elements
+const gameContainer = document.querySelector(".game-container");
 const header = document.getElementById("header");
 const form = document.getElementById("form");
 const won = document.getElementById("won");
@@ -14,10 +18,9 @@ const lost = document.getElementById("lost");
 const wrapper = document.getElementById("wrapper");
 const table = document.getElementById("table");
 
-
 let cards;
 let interval;
-let remaining_time;
+let remainingTime;
 let firstCard = false;
 let secondCard = false;
 let started = false;
@@ -42,8 +45,8 @@ const  items = [
 
 // Store data in the Local Storage
 const setData = (user, score) => { 
-    let users_string = local.getItem("users");
-    let users = JSON.parse(users_string) ?? []; //returns an empty list if the value is null
+    let userString = local.getItem("users");
+    let users = JSON.parse(userString) ?? []; //returns an empty list if the value is null
     users.push({"username":user, "score":score});
     local.setItem("users", JSON.stringify(users));
 
@@ -87,8 +90,8 @@ const timeGenerator = () => {
 
 //For calculating score
 const scoreCalculator = () => {
-    remaining_time = (minutes*60) + seconds; 
-    scoreCalc = Math.round(1000 * (remaining_time/180));
+    remainingTime = (minutes*60) + seconds; 
+    scoreCalc = Math.round(1000 * (remainingTime/180));
     score.innerHTML = `<span>Score:</span>${scoreCalc}`;
   };
 
@@ -144,7 +147,7 @@ const matrixGenerator = (cardValues, size = 4) => {
   cards = document.querySelectorAll(".card-container");
   cards.forEach((card) => {
     card.addEventListener("click", () => {
-        if (remaining_time != 0 && started==true && flip) { //If time is not over, the user already clicked 'start playing' and there aren't more than 2 cards shown
+        if (remainingTime != 0 && started==true && flip) { //If time is not over, the user already clicked 'start playing' and there aren't more than 2 cards shown
         
         //If selected card is not matched yet 
         if (!card.classList.contains("matched")) {
@@ -225,7 +228,7 @@ startButton2.addEventListener("click", () => {
     if (username.value!="") {
         started = true;
         form.classList.add("hide");
-        header.innerHTML += `<p style="display:inline">Username:   ${username.value}`;
+        header.innerHTML += `<p style="display:inline">Welcome,   ${username.value}`;
         
         scoreCalc = 1000;
         seconds = 0;
@@ -257,14 +260,46 @@ restartButton.addEventListener("click", () => {
 });
 
 changeButton.addEventListener("click", () => { 
-    
+
     ///header.removeChild(`Username:   ${username.value}`);
     form.classList.remove("hide");
     changeButton.classList.add("hide");
     restartButton.classList.add("hide");
+
 });
 
-console.log(local.getItem("Marielena"));
-console.log(local.getItem("mari"));
+showButton.addEventListener("click", () => {
+    let scoretable = createTable(JSON.parse(local.getItem("users"))); 
+    table.classList.remove("hide");
+    scoretable.classList.add("table");
+    table.appendChild(scoretable);
+    showButton.classList.add("hide");
 
+});
 
+function createTable(data) {
+  const table = document.createElement('table');
+  const headerRow = document.createElement('tr');
+  
+  // Create table header row
+  const keys = Object.keys(data[0]);
+  for (const key of keys) {
+    const headerCell = document.createElement('th');
+    headerCell.textContent = key;
+    headerRow.appendChild(headerCell);
+  }
+  table.appendChild(headerRow);
+
+  // Create table data rows
+  for (const obj of data) {
+    const dataRow = document.createElement('tr');
+    for (const key of keys) {
+      const dataCell = document.createElement('td');
+      dataCell.textContent = obj[key];
+      dataRow.appendChild(dataCell);
+    }
+    table.appendChild(dataRow);
+  }
+
+  return table;
+}

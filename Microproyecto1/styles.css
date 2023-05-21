@@ -48,6 +48,7 @@ body {
   height: 100vh;
   color: #03438C;
   text-align: center;
+
 }
 
 /* Style the footer */
@@ -98,7 +99,7 @@ body {
     top: 65%;
     border-radius: 8px;
     width: 50%;
-  
+    height: auto;
     
     box-shadow: 0 9px 9px #02264f;
 }
@@ -179,4 +180,28 @@ body {
 #result h4 {
   font-size: 1.8em;
   margin: 0.6em 0 1em 0;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  border: 2px solid #03438C;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+td, th {
+  border: 1px solid #03438C;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #47A1EB;
+}
+
+tr:nth-child(odd) {
+  background-color: aliceblue;
 }
