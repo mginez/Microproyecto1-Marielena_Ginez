@@ -36,6 +36,14 @@ const  items = [
   { name: "guri", image: "guri.jpg" },
   { name: "asturias", image: "asturias.jpg" }
 ];
+
+
+var data = [];
+let local = localStorage
+
+
+
+
 //Initial Time
 let seconds = 0,
   minutes = 3;
@@ -146,6 +154,7 @@ const matrixGenerator = (cardValues, size = 4) => {
             //if both cards match add matched class so these cards would beignored next time
             firstCard.classList.add("matched");
             secondCard.classList.add("matched");
+            flip = true;
             //set firstCard to false since next card would be first now
             firstCard = false;
             //winCount increment as user found a correct match
@@ -153,8 +162,11 @@ const matrixGenerator = (cardValues, size = 4) => {
             //check if winCount ==half of cardValues
             if (winCount == Math.floor(cardValues.length / 2)) {
                 scoreCalculator();
-              won.classList.remove("hide");
+                won.classList.remove("hide");
                 clearInterval(interval);
+                
+                data.push({key:username.value, value:score});
+                console.log(data);
 
               
             }
@@ -229,3 +241,5 @@ restartButton.addEventListener("click", () => {
 changeButton.addEventListener("click", () => { 
     form.classList.remove("hide");
 });
+
+
