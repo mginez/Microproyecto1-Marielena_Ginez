@@ -55,7 +55,7 @@ const setData = (user, score) => {
 
 //Initial Time
 let seconds = 0,
-  minutes = 3;
+  minutes = 1;
   
   
 //Initial score and win count
@@ -68,6 +68,7 @@ const timeGenerator = () => {
     if (seconds>0) {
         seconds -= 1; 
         scoreCalculator();
+        gameOver();
     }
     //minutes logic
     if (seconds <= 0 && minutes>0) {
@@ -172,15 +173,16 @@ const matrixGenerator = (cardValues, size = 4) => {
             winCount += 1;
             //check if winCount ==half of cardValues
             if (winCount == Math.floor(cardValues.length / 2)) {
+
                 scoreCalculator();
+
+
                 won.classList.remove("hide");
+                showButton.classList.remove('hide');
                 clearInterval(interval);
 
 
                 setData(username.value, scoreCalc);
-                
-
-                
                 
 
               
@@ -243,8 +245,12 @@ function createTable(data) {
   return table;
 }
 
-function sortDictionary(dict) {
+const gameOver= () => {
 
+    if (remainingTime==0) {
+      lost.classList.remove('hide');
+      showButton.classList.remove('hide');
+    }
 
 }
 
@@ -257,13 +263,12 @@ function sortDictionary(dict) {
 startButton2.addEventListener("click", () => { 
     if (username.value!="") {
         started = true;
-        form.classList.add("hide");
-        header.innerHTML += `<p style="display:inline">Welcome,   ${username.value}`;
+        header.innerHTML = `<p style="display:inline">Welcome,   ${username.value}`;
         
         //Initial values
         scoreCalc = 1000;
         seconds = 0;
-        minutes = 3;
+        minutes = 1;
     
         //Start timer
         interval = setInterval(timeGenerator, 1000);
@@ -298,14 +303,27 @@ restartButton.addEventListener("click", () => {
 changeButton.addEventListener("click", () => { 
 
     ///header.removeChild(`Username:   ${username.value}`);
-    form.classList.remove("hide");
+    
     changeButton.classList.add("hide");
     restartButton.classList.add("hide");
+    header.innerHTML =`<form id="form"> Please enter your username:
+    
+    <input id="user" name="username" placeholder="Username..."/>  
+    <button class="button" id="start2" >Start playing</button>
+
+  </form>`
 
 });
 
 showButton.addEventListener("click", () => {
-    let scoretable = createTable(JSON.parse(local.getItem("users"))); 
+
+    //Sort score table (max to min score)
+    var dict = JSON.parse(local.getItem("users"));
+    dict.sort(function(a,b) {
+      return b.Score - a.Score
+    });
+
+    let scoretable = createTable(dict); 
    
     scoretable.classList.add("table");
     table.appendChild(scoretable);

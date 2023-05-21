@@ -63,6 +63,10 @@ body {
   box-shadow: 0 7px rgba(0, 1, 86, 0.3);
   border: none;
   cursor: pointer;
+  @media screen and (max-width:767px) {
+    font-size: 18px;
+  
+}
   
   
 }
@@ -84,6 +88,10 @@ body {
   box-shadow: 0 7px rgba(0, 1, 86, 0.3);
   border: none;
   cursor: pointer;
+  @media screen and (max-width:767px) {
+    font-size: 18px;
+  
+}
 }
 
 .wrapper{
