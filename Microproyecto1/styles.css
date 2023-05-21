@@ -9,6 +9,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+div{
+  position:relative;
+}
+
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
@@ -38,11 +42,13 @@ body {
 
 /* Style the content */
 .content {
+ 
   background-color: #5AABED;
   padding: 10px;
   color: #03438C;
   text-align: center;
-  min-height: 120vh;
+  min-height: 10vh;
+  overflow: hidden;
   
 }
 
@@ -51,7 +57,7 @@ body {
   background-color: #03438C;
   padding: 10px;
   display: flex;
-  gap:50%;
+  gap:20%;
 }
 
 .button {
@@ -61,6 +67,8 @@ body {
   width: 50%;
   color:aliceblue;
   box-shadow: 0 7px rgba(0, 1, 86, 0.3);
+  position: relative;
+  align-self: center;
   border: none;
   cursor: pointer;
   @media screen and (max-width:767px) {
@@ -88,7 +96,6 @@ body {
   box-shadow: 0 7px rgba(0, 1, 86, 0.3);
   @media screen and (max-width:767px) {
     font-size: 18px;
-  
 }
 }
 
@@ -97,7 +104,7 @@ body {
     padding:5%;
     background-color: aliceblue;
     gap: 5%;
-    position: absolute;
+    position: relative;
     border-radius: 8px;
     width: 60%;
     height: auto;
