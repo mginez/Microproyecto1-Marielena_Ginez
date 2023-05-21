@@ -47,7 +47,7 @@ const  items = [
 const setData = (user, score) => { 
     let userString = local.getItem("users");
     let users = JSON.parse(userString) ?? []; //returns an empty list if the value is null
-    users.push({"username":user, "score":score});
+    users.push({"Username":user, "Score":score});
     local.setItem("users", JSON.stringify(users));
 
 }
@@ -138,10 +138,6 @@ const matrixGenerator = (cardValues, size = 4) => {
      </div>
      `;
   }
-
-  
-  //Grid
-  gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
   
   //Cards
   cards = document.querySelectorAll(".card-container");
@@ -220,63 +216,6 @@ const initializer = () => {
 initializer();
 
 
-
- 
-
-//Start game
-startButton2.addEventListener("click", () => { 
-    if (username.value!="") {
-        started = true;
-        form.classList.add("hide");
-        header.innerHTML += `<p style="display:inline">Welcome,   ${username.value}`;
-        
-        scoreCalc = 1000;
-        seconds = 0;
-        minutes = 3;
-    
-        //Start timer
-        interval = setInterval(timeGenerator, 1000);
-        //initial score
-        score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
-        changeButton.classList.remove("hide");
-        restartButton.classList.remove("hide");
-        
-    }
-});
-
-restartButton.addEventListener("click", () => { 
-    
-    scoreCalc = 1000;
-    seconds = 0;
-    minutes = 3;
-    //Start timer
-    interval = setInterval(timeGenerator, 1000);
-    //initial score
-    score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
-    won.classList.add("hide");
-    lost.classList.add("hide");
-    initializer();
-    
-});
-
-changeButton.addEventListener("click", () => { 
-
-    ///header.removeChild(`Username:   ${username.value}`);
-    form.classList.remove("hide");
-    changeButton.classList.add("hide");
-    restartButton.classList.add("hide");
-
-});
-
-showButton.addEventListener("click", () => {
-    let scoretable = createTable(JSON.parse(local.getItem("users"))); 
-    table.classList.remove("hide");
-    scoretable.classList.add("table");
-    table.appendChild(scoretable);
-    showButton.classList.add("hide");
-
-});
-
 function createTable(data) {
   const table = document.createElement('table');
   const headerRow = document.createElement('tr');
@@ -303,3 +242,74 @@ function createTable(data) {
 
   return table;
 }
+
+function sortDictionary(dict) {
+
+
+}
+
+
+
+//////////////////
+ 
+
+//Start game
+startButton2.addEventListener("click", () => { 
+    if (username.value!="") {
+        started = true;
+        form.classList.add("hide");
+        header.innerHTML += `<p style="display:inline">Welcome,   ${username.value}`;
+        
+        //Initial values
+        scoreCalc = 1000;
+        seconds = 0;
+        minutes = 3;
+    
+        //Start timer
+        interval = setInterval(timeGenerator, 1000);
+        //initial score
+        score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
+        changeButton.classList.remove("hide");
+        restartButton.classList.remove("hide");
+        
+    } else {
+      window.alert("Please enter your username");
+    }
+});
+
+restartButton.addEventListener("click", () => { 
+    
+    //Reset timer
+    clearInterval(interval);
+    //Reset values
+    scoreCalc = 1000;
+    seconds = 0;
+    minutes = 3;
+    //Start timer
+    interval = setInterval(timeGenerator, 1000);
+    //initial score
+    score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
+    won.classList.add("hide");
+    lost.classList.add("hide");
+    initializer();
+    
+});
+
+changeButton.addEventListener("click", () => { 
+
+    ///header.removeChild(`Username:   ${username.value}`);
+    form.classList.remove("hide");
+    changeButton.classList.add("hide");
+    restartButton.classList.add("hide");
+
+});
+
+showButton.addEventListener("click", () => {
+    let scoretable = createTable(JSON.parse(local.getItem("users"))); 
+   
+    scoretable.classList.add("table");
+    table.appendChild(scoretable);
+    showButton.classList.add("hide");
+
+});
+
