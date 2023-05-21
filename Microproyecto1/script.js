@@ -2,24 +2,29 @@
 const score = document.getElementById("score");
 const timeValue = document.getElementById("time");
 const username = document.getElementById("user");
-
 const stopButton = document.getElementById("stop");
 const startButton2 = document.getElementById("start2");
 const changeButton =  document.getElementById("change");
 const restartButton = document.getElementById("restart");
 const gameContainer = document.querySelector(".game-container");
 const result = document.getElementById("result");
-const controls = document.querySelector(".controls-container");
 const header = document.getElementById("header");
 const form = document.getElementById("form");
+const won = document.getElementById("won");
+const lost = document.getElementById("lost");
+
+
+
 let cards;
 let interval;
 let remaining_time;
 let firstCard = false;
 let secondCard = false;
+let started = false;
+let flip = true;
 
 //Items array
-const items = [
+const  items = [
   { name: "laura", image: "laura.jpg" },
   { name: "eugenio", image: "eugenio.jpg" },
   { name: "valentin", image: "valentin.jpg" },
@@ -36,9 +41,8 @@ let seconds = 0,
   minutes = 3;
   
   
-//Initial moves and win count
-let movesCount = 0,
-  winCount = 0
+//Initial score and win count
+let winCount = 0,
   scoreCalc = 1000;
 //For timer
 const timeGenerator = () => {
@@ -73,6 +77,8 @@ const scoreCalculator = () => {
   };
 
 //////
+
+
 
 //Pick random objects from the items array
 const generateRandom = (size = 4) => {
@@ -118,8 +124,8 @@ const matrixGenerator = (cardValues, size = 4) => {
   cards = document.querySelectorAll(".card-container");
   cards.forEach((card) => {
     card.addEventListener("click", () => {
-        if (remaining_time != 0) { //If time is not over
-
+        if (remaining_time != 0 && started==true && flip) { //If time is not over
+        
         //If selected card is not matched yet then only run (i.e already matched card when clicked would be ignored)
         if (!card.classList.contains("matched")) {
         //flip the cliked card
@@ -133,6 +139,7 @@ const matrixGenerator = (cardValues, size = 4) => {
         } else {
          
           //secondCard and value
+          flip = false;
           secondCard = card;
           let secondCardValue = card.getAttribute("data-card-value");
           if (firstCardValue == secondCardValue) {
@@ -146,9 +153,10 @@ const matrixGenerator = (cardValues, size = 4) => {
             //check if winCount ==half of cardValues
             if (winCount == Math.floor(cardValues.length / 2)) {
                 scoreCalculator();
-              result.innerHTML = `<h2>You Won</h2>
-            <h4>Score: ${scoreCalc}</h4>`;
-              stopGame();
+              won.classList.remove("hide");
+                clearInterval(interval);
+
+              
             }
           } else {
             //if the cards dont match
@@ -159,6 +167,7 @@ const matrixGenerator = (cardValues, size = 4) => {
             let delay = setTimeout(() => {
               tempFirst.classList.remove("flipped");
               tempSecond.classList.remove("flipped");
+              flip=true;
             }, 900);
           }
         }
@@ -168,16 +177,7 @@ const matrixGenerator = (cardValues, size = 4) => {
 };
 
 
-//Stop game
-stopButton.addEventListener(
-  "click",
-  (stopGame = () => {
-    controls.classList.remove("hide");
-    stopButton.classList.add("hide");
-    startButton.classList.remove("hide");
-    clearInterval(interval);
-  })
-);
+
 //Initialize values and func calls
 const initializer = () => {
   result.innerText = "";
@@ -193,9 +193,12 @@ initializer();
 
 startButton2.addEventListener("click", () => { 
     if (username.value!="") {
-        
+        started = true;
         form.classList.add("hide");
+        restartButton.classList.remove("hide");
+        changeButton.classList.remove("hide");
         header.innerHTML += `<p style="display:inline">Username:   ${username.value}`;
+        
         
         scoreCalc = 1000;
         seconds = 0;
@@ -218,5 +221,11 @@ restartButton.addEventListener("click", () => {
     interval = setInterval(timeGenerator, 1000);
     //initial score
     score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
+    won.classList.add("hide");
+    lost.classList.add("hide");
     initializer();
+});
+
+changeButton.addEventListener("click", () => { 
+    form.classList.remove("hide");
 });
