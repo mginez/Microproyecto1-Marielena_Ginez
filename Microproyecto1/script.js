@@ -6,7 +6,7 @@ const startButton2 = document.getElementById("start2");
 const changeButton =  document.getElementById("change");
 const restartButton = document.getElementById("restart");
 const gameContainer = document.querySelector(".game-container");
-const result = document.getElementById("result");
+
 const header = document.getElementById("header");
 const form = document.getElementById("form");
 const won = document.getElementById("won");
@@ -45,6 +45,7 @@ const setData = (user, score) => {
     let users_string = local.getItem("users");
     let users = JSON.parse(users_string) ?? []; //returns an empty list if the value is null
     users.push({"username":user, "score":score});
+    local.setItem("users", JSON.stringify(users));
 
 }
 
@@ -57,6 +58,8 @@ let seconds = 0,
 //Initial score and win count
 let winCount = 0,
   scoreCalc = 1000;
+
+
 //For timer
 const timeGenerator = () => {
     if (seconds>0) {
@@ -130,7 +133,7 @@ const matrixGenerator = (cardValues, size = 4) => {
         <div class="card-after">
         <img src="${cardValues[i].image}" class="image" style="border-radius:5px;"/></div>
      </div>
-     `; 
+     `;
   }
 
   
@@ -205,7 +208,7 @@ const matrixGenerator = (cardValues, size = 4) => {
 
 //Initialize values and func calls
 const initializer = () => {
-  result.innerText = "";
+  
   winCount = 0;
   let cardValues = generateRandom();
   console.log(cardValues);
@@ -215,19 +218,14 @@ initializer();
 
 
 
-
-for (let i = 0; i < local.length; i++) {
-    table.append(local.key(i)+":"+local.getItem(local.key(i))+"\n");
-} 
+ 
 
 //Start game
 startButton2.addEventListener("click", () => { 
     if (username.value!="") {
         started = true;
         form.classList.add("hide");
-        restartButton.classList.remove("hide");
-        changeButton.classList.remove("hide");
-        header.append(`Username:   ${username.value}`);
+        header.innerHTML += `<p style="display:inline">Username:   ${username.value}`;
         
         scoreCalc = 1000;
         seconds = 0;
@@ -237,6 +235,8 @@ startButton2.addEventListener("click", () => {
         interval = setInterval(timeGenerator, 1000);
         //initial score
         score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
+        changeButton.classList.remove("hide");
+        restartButton.classList.remove("hide");
         
     }
 });
