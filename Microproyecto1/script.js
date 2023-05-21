@@ -4,7 +4,7 @@ const timeValue = document.getElementById("time");
 const username = document.getElementById("user");
 
 //Buttons
-const startButton2 = document.getElementById("start2");
+const startButton = document.getElementById("start");
 const changeButton =  document.getElementById("change");
 const restartButton = document.getElementById("restart");
 const showButton = document.getElementById("show");
@@ -15,7 +15,6 @@ const header = document.getElementById("header");
 const form = document.getElementById("form");
 const won = document.getElementById("won");
 const lost = document.getElementById("lost");
-const wrapper = document.getElementById("wrapper");
 const table = document.getElementById("table");
 
 let cards;
@@ -55,7 +54,7 @@ const setData = (user, score) => {
 
 //Initial Time
 let seconds = 0,
-  minutes = 1;
+  minutes = 3;
   
   
 //Initial score and win count
@@ -129,7 +128,7 @@ const matrixGenerator = (cardValues, size = 4) => {
         Create Cards
         before => front side (contains unimet's logo)
         after => back side (contains actual image)
-        data-card-values is a custom attribute which stores the names of the cards to match later
+        data-card-values stores the names of the cards to match later
       */
     gameContainer.innerHTML += `
      <div class="card-container" data-card-value="${cardValues[i].name}">
@@ -207,7 +206,7 @@ const matrixGenerator = (cardValues, size = 4) => {
 
 
 
-//Initialize values and func calls
+//Initialize values and functions
 const initializer = () => {
   
   winCount = 0;
@@ -217,7 +216,7 @@ const initializer = () => {
 };
 initializer();
 
-
+//Creates the score table
 function createTable(data) {
   const table = document.createElement('table');
   const headerRow = document.createElement('tr');
@@ -260,7 +259,7 @@ const gameOver= () => {
  
 
 //Start game
-startButton2.addEventListener("click", () => { 
+startButton.addEventListener("click", () => { 
     if (username.value!="") {
         started = true;
         header.innerHTML = `<p style="display:inline">Welcome,   ${username.value}`;
@@ -268,7 +267,7 @@ startButton2.addEventListener("click", () => {
         //Initial values
         scoreCalc = 1000;
         seconds = 0;
-        minutes = 1;
+        minutes = 3;
     
         //Start timer
         interval = setInterval(timeGenerator, 1000);
@@ -309,7 +308,7 @@ changeButton.addEventListener("click", () => {
     header.innerHTML =`<form id="form"> Please enter your username:
     
     <input id="user" name="username" placeholder="Username..."/>  
-    <button class="button" id="start2" >Start playing</button>
+    <button class="button" id="start" >Start playing</button>
 
   </form>`
 
