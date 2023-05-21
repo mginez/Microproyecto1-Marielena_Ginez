@@ -45,7 +45,7 @@ const  items = [
 // Store data in the Local Storage
 const setData = (user, score) => { 
     let userString = local.getItem("users");
-    let users = JSON.parse(userString) ?? []; //returns an empty list if the value is null
+    let users = JSON.parse(userString) ?? []; //returns an empty array if the value is null
     users.push({"Username":user, "Score":score});
     local.setItem("users", JSON.stringify(users));
 
@@ -105,7 +105,7 @@ const generateRandom = (size = 4) => {
   let tempArray = [...items];
   //initializes cardValues array
   let cardValues = [];
-  //size should be double (4*4 matrix)/2 since pairs of objects would exist
+  //size according to pairs
   size = (size * size) / 2;
   //Random object selection
   for (let i = 0; i < size; i++) {
@@ -127,8 +127,7 @@ const matrixGenerator = (cardValues, size = 4) => {
     /*
         Create Cards
         before => front side (contains unimet's logo)
-        after => back side (contains actual image)
-        data-card-values stores the names of the cards to match later
+        after => back side (contains image related to the unimet)
       */
     gameContainer.innerHTML += `
      <div class="card-container" data-card-value="${cardValues[i].name}">
@@ -147,7 +146,7 @@ const matrixGenerator = (cardValues, size = 4) => {
         
         //If selected card is not matched yet 
         if (!card.classList.contains("matched")) {
-        //flip the cliked card
+        //flip the clicked card
         card.classList.add("flipped");
         //if it is the firstcard 
         if (!firstCard) {
@@ -168,7 +167,7 @@ const matrixGenerator = (cardValues, size = 4) => {
             flip = true;
             //set firstCard to false since next card would be first now
             firstCard = false;
-            //winCount increment as user found a correct match
+            //winCount increments as user found a correct match
             winCount += 1;
             //check if winCount ==half of cardValues
             if (winCount == Math.floor(cardValues.length / 2)) {
@@ -300,8 +299,6 @@ restartButton.addEventListener("click", () => {
 });
 
 changeButton.addEventListener("click", () => { 
-
-    ///header.removeChild(`Username:   ${username.value}`);
     
     changeButton.classList.add("hide");
     restartButton.classList.add("hide");

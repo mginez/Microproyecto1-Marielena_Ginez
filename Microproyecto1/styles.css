@@ -7,6 +7,8 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  background-color: #03438C;
 }
 
 div{
@@ -57,7 +59,7 @@ div{
   background-color: #03438C;
   padding: 10px;
   display: flex;
-  gap:20%;
+  gap:50%;
 }
 
 .button {
@@ -87,6 +89,7 @@ div{
   transform: translateY(4px);
 }
 
+/*Style the restart and other secondary buttons*/
 .button2 {
   border-radius: 8px;
   font-size: 24px;
@@ -108,14 +111,18 @@ div{
     border-radius: 8px;
     width: 60%;
     height: auto;
+    margin-top: 2.5%;
     margin-left: 20%;
     box-shadow: 0 9px 9px #02264f;
     overflow: hidden;
 
     @media screen and (max-width:767px) {
       margin-left: 15%;
-      width: 70%;
+      width: 75%;
     }
+    @media screen and (min-width:767px) and (max-width:1023px){
+      margin-left: 20%;
+  }
     
 }
 
@@ -125,7 +132,7 @@ div{
   display: grid;
   grid-template-columns: repeat(4,auto);
   gap: 0.6em;
-  overflow: hidden;
+ 
 
   @media screen and (max-width:767px) {
       grid-template-columns: repeat(2, auto);
@@ -198,7 +205,10 @@ table {
   width: 80%;
   border: 2px solid #03438C;
  
-  margin:auto;
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+  margin-left: auto;
+  margin-right: auto;
   
 }
 
