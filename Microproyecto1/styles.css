@@ -13,7 +13,7 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #03438C;
-  font-family: fantasy, Tahoma, Geneva, Verdana, sans-serif;
+  font-family: fantasy, Tahoma, Verdana, sans-serif;
   font-weight: bold;
   color: rgb(255, 111, 0);
   letter-spacing:2vw;
@@ -24,12 +24,7 @@ body {
 
 }
 
-@media screen and (max-width:767px) {
-    .game-container{
-      display: grid;
-      grid-template-columns: repeat(2, auto);
-    }
-}
+
 
 .header{
   text-align: center;
@@ -69,6 +64,7 @@ body {
   border: none;
   cursor: pointer;
   
+  
 }
 
 .button:hover {background-color: #002856}
@@ -101,10 +97,12 @@ body {
     height: auto;
     margin-left: 20%;
     box-shadow: 0 9px 9px #02264f;
+
     @media screen and (max-width:767px) {
       margin-left: 15%;
       width: 70%;
     }
+    
 }
 
 .game-container {
@@ -115,10 +113,12 @@ body {
   gap: 0.6em;
   
   @media screen and (max-width:767px) {
-      display: grid;
       grid-template-columns: repeat(2, auto);
     
-}
+  }
+  @media screen and (min-width:767px) and (max-width:1023px){
+      grid-template-columns: repeat(3, auto);
+  }
 }
 .stats-container {
   text-align: right;
