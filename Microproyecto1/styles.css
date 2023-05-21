@@ -54,6 +54,7 @@ body {
 .footer {
   background-color: #03438C;
   padding: 10px;
+  display: block;
 }
 
 .button {
@@ -97,6 +98,7 @@ body {
     top: 65%;
     border-radius: 8px;
     width: 50%;
+    height: fit-content;
     
     box-shadow: 0 9px 9px #02264f;
 }
@@ -160,13 +162,7 @@ body {
   top: 0;
 }
 
-#stop {
-  font-size: 1.1em;
-  display: block;
-  margin: 1.1em auto 0 auto;
-  background-color: #000000;
-  color: #ffffff;
-}
+
 .controls-container button {
   font-size: 1.3em;
   box-shadow: 0 0.6em 2em rgba(86, 66, 0, 0.2);

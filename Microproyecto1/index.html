@@ -20,10 +20,10 @@
   <form id="form"> Please enter your username:
     
     <input id="user" name="username" placeholder="Username..."/>  
-    <button class="button" id="start2">Start playing</button>
-    
-  
+    <button class="button" id="start2" >Start playing</button>
+
   </form>
+  
   
 </div>
 
@@ -31,6 +31,8 @@
 
 <div class="content">
   <div class="wrapper"> 
+    <h2 id="won" class="hide">You won!</h2>
+    <h2 id="lost" class="hide">You lost!</h2>
   <div class="stats-container">
       <div id="moves-count"></div>
       <div id="score"></div>
@@ -45,15 +47,18 @@
   <p id="result"></p>
 </div>
 
+<div class="footer">
+  <button id="change" class="button" style="width:25%"> Change username </button>
+  <button id="restart" class="button button2"> Restart </button>  
+</div>
+
+
 <!-- Script -->
 <script src="script.js"></script>
 </div>
 
 
-<div class="footer">
-  <button id="change" class="button" style="width:25%"> Change username </button>
-  <button id="restart" class="button button2"> Restart </button>
-</div>
+
 
 </body>
 </html>
