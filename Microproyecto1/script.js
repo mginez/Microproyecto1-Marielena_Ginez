@@ -2,7 +2,6 @@
 const score = document.getElementById("score");
 const timeValue = document.getElementById("time");
 const username = document.getElementById("user");
-const stopButton = document.getElementById("stop");
 const startButton2 = document.getElementById("start2");
 const changeButton =  document.getElementById("change");
 const restartButton = document.getElementById("restart");
@@ -12,7 +11,8 @@ const header = document.getElementById("header");
 const form = document.getElementById("form");
 const won = document.getElementById("won");
 const lost = document.getElementById("lost");
-
+const wrapper = document.getElementById("wrapper");
+const table = document.getElementById("table");
 
 
 let cards;
@@ -22,6 +22,7 @@ let firstCard = false;
 let secondCard = false;
 let started = false;
 let flip = true;
+let local = localStorage;
 
 //Items array
 const  items = [
@@ -38,10 +39,14 @@ const  items = [
 ];
 
 
-var data = [];
-let local = localStorage
 
+// Store data in the Local Storage
+const setData = (user, score) => { 
+    let users_string = local.getItem("users");
+    let users = JSON.parse(users_string) ?? []; //returns an empty list if the value is null
+    users.push({"username":user, "score":score});
 
+}
 
 
 //Initial Time
@@ -105,6 +110,8 @@ const generateRandom = (size = 4) => {
   }
   return cardValues;
 };
+
+
 const matrixGenerator = (cardValues, size = 4) => {
   gameContainer.innerHTML = "";
   cardValues = [...cardValues, ...cardValues];
@@ -114,7 +121,7 @@ const matrixGenerator = (cardValues, size = 4) => {
     /*
         Create Cards
         before => front side (contains unimet's logo)
-        after => back side (contains actual image);
+        after => back side (contains actual image)
         data-card-values is a custom attribute which stores the names of the cards to match later
       */
     gameContainer.innerHTML += `
@@ -123,8 +130,10 @@ const matrixGenerator = (cardValues, size = 4) => {
         <div class="card-after">
         <img src="${cardValues[i].image}" class="image" style="border-radius:5px;"/></div>
      </div>
-     `;
+     `; 
   }
+
+  
   //Grid
   gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
   
@@ -132,22 +141,22 @@ const matrixGenerator = (cardValues, size = 4) => {
   cards = document.querySelectorAll(".card-container");
   cards.forEach((card) => {
     card.addEventListener("click", () => {
-        if (remaining_time != 0 && started==true && flip) { //If time is not over
+        if (remaining_time != 0 && started==true && flip) { //If time is not over, the user already clicked 'start playing' and there aren't more than 2 cards shown
         
-        //If selected card is not matched yet then only run (i.e already matched card when clicked would be ignored)
+        //If selected card is not matched yet 
         if (!card.classList.contains("matched")) {
         //flip the cliked card
         card.classList.add("flipped");
-        //if it is the firstcard (!firstCard since firstCard is initially false)
+        //if it is the firstcard 
         if (!firstCard) {
-          //so current card will become firstCard
+          //current card will become firstCard
           firstCard = card;
           //current cards value becomes firstCardValue
           firstCardValue = card.getAttribute("data-card-value");
         } else {
          
           //secondCard and value
-          flip = false;
+          flip = false; // if the second card is selected, the user can't flip another one
           secondCard = card;
           let secondCardValue = card.getAttribute("data-card-value");
           if (firstCardValue == secondCardValue) {
@@ -164,9 +173,13 @@ const matrixGenerator = (cardValues, size = 4) => {
                 scoreCalculator();
                 won.classList.remove("hide");
                 clearInterval(interval);
+
+
+                setData(username.value, scoreCalc);
                 
-                data.push({key:username.value, value:score});
-                console.log(data);
+
+                
+                
 
               
             }
@@ -179,7 +192,7 @@ const matrixGenerator = (cardValues, size = 4) => {
             let delay = setTimeout(() => {
               tempFirst.classList.remove("flipped");
               tempSecond.classList.remove("flipped");
-              flip=true;
+              flip=true; //if both cards are hidden, the user can flip cards again
             }, 900);
           }
         }
@@ -198,19 +211,23 @@ const initializer = () => {
   console.log(cardValues);
   matrixGenerator(cardValues);
 };
-
-
 initializer();
 
 
+
+
+for (let i = 0; i < local.length; i++) {
+    table.append(local.key(i)+":"+local.getItem(local.key(i))+"\n");
+} 
+
+//Start game
 startButton2.addEventListener("click", () => { 
     if (username.value!="") {
         started = true;
         form.classList.add("hide");
         restartButton.classList.remove("hide");
         changeButton.classList.remove("hide");
-        header.innerHTML += `<p style="display:inline">Username:   ${username.value}`;
-        
+        header.append(`Username:   ${username.value}`);
         
         scoreCalc = 1000;
         seconds = 0;
@@ -220,12 +237,12 @@ startButton2.addEventListener("click", () => {
         interval = setInterval(timeGenerator, 1000);
         //initial score
         score.innerHTML = `<span>Score:</span> ${scoreCalc}`;
-        changeButton.classList.remove("hide");
         
     }
 });
 
 restartButton.addEventListener("click", () => { 
+    
     scoreCalc = 1000;
     seconds = 0;
     minutes = 3;
@@ -236,10 +253,18 @@ restartButton.addEventListener("click", () => {
     won.classList.add("hide");
     lost.classList.add("hide");
     initializer();
+    
 });
 
 changeButton.addEventListener("click", () => { 
+    
+    ///header.removeChild(`Username:   ${username.value}`);
     form.classList.remove("hide");
+    changeButton.classList.add("hide");
+    restartButton.classList.add("hide");
 });
+
+console.log(local.getItem("Marielena"));
+console.log(local.getItem("mari"));
 
 
